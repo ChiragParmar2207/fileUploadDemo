@@ -1,6 +1,5 @@
 import multer from 'multer';
 import multerS3 from 'multer-s3';
-import path from 'path';
 import dotenv from 'dotenv';
 dotenv.config();
 import s3 from '../config/aws.js';

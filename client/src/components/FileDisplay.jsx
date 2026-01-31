@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import './FileDisplay.css';
 
@@ -85,7 +85,7 @@ const FileDisplay = () => {
    */
   const renderFileItem = (item, storageType) => {
     const isLocal = storageType === 'local';
-    
+
     // Handle single file
     if (item.file) {
       const fileUrl = getFileUrl(item.file, isLocal);
@@ -110,7 +110,7 @@ const FileDisplay = () => {
         </div>
       );
     }
-    
+
     // Handle multiple files
     if (item.files && item.files.length > 0) {
       return (
@@ -126,11 +126,21 @@ const FileDisplay = () => {
                       <img src={fileUrl} alt={`File ${index + 1}`} className="file-preview-small" />
                     </a>
                   ) : isPDF(file) ? (
-                    <a href={fileUrl} target="_blank" rel="noopener noreferrer" className="pdf-link-small">
+                    <a
+                      href={fileUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="pdf-link-small"
+                    >
                       <div className="pdf-icon-small">[PDF]</div>
                     </a>
                   ) : (
-                    <a href={fileUrl} target="_blank" rel="noopener noreferrer" className="file-link-small">
+                    <a
+                      href={fileUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="file-link-small"
+                    >
                       <div className="file-icon-small">[FILE]</div>
                     </a>
                   )}
@@ -142,7 +152,7 @@ const FileDisplay = () => {
         </div>
       );
     }
-    
+
     return null;
   };
 

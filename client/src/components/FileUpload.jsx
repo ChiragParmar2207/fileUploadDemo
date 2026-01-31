@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
 import './FileUpload.css';
 
@@ -26,13 +26,7 @@ const FileUpload = () => {
    * Validate file type - only allow images and PDFs
    */
   const validateFileType = (file) => {
-    const allowedTypes = [
-      'image/jpeg',
-      'image/jpg',
-      'image/png',
-      'image/webp',
-      'application/pdf',
-    ];
+    const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'application/pdf'];
     return allowedTypes.includes(file.type);
   };
 
@@ -66,9 +60,9 @@ const FileUpload = () => {
    */
   const handleMultipleFilesChange = (section, e) => {
     const files = Array.from(e.target.files);
-    
+
     const invalidFiles = files.filter((file) => !validateFileType(file));
-    
+
     if (invalidFiles.length > 0) {
       setUploads((prev) => ({
         ...prev,
@@ -93,7 +87,7 @@ const FileUpload = () => {
    */
   const handleUpload = async (section, endpoint, fieldName) => {
     const uploadData = uploads[section];
-    
+
     if (!uploadData.file && !uploadData.files) {
       setUploads((prev) => ({
         ...prev,
@@ -135,8 +129,7 @@ const FileUpload = () => {
 
       document.getElementById(`${section}-input`).value = '';
     } catch (error) {
-      const errorMessage =
-        error.response?.data?.message || 'Upload failed. Please try again.';
+      const errorMessage = error.response?.data?.message || 'Upload failed. Please try again.';
       setUploads((prev) => ({
         ...prev,
         [section]: {
@@ -153,7 +146,7 @@ const FileUpload = () => {
    */
   const handlePresignedUploadSingle = async (section) => {
     const uploadData = uploads[section];
-    
+
     if (!uploadData.file) {
       setUploads((prev) => ({
         ...prev,
@@ -208,7 +201,9 @@ const FileUpload = () => {
     } catch (error) {
       console.error('Pre-signed upload error:', error);
       const errorMessage =
-        error.response?.data?.message || error.message || 'Pre-signed upload failed. Please try again.';
+        error.response?.data?.message ||
+        error.message ||
+        'Pre-signed upload failed. Please try again.';
       setUploads((prev) => ({
         ...prev,
         [section]: {
@@ -225,7 +220,7 @@ const FileUpload = () => {
    */
   const handlePresignedUploadMultiple = async (section) => {
     const uploadData = uploads[section];
-    
+
     if (!uploadData.files || uploadData.files.length === 0) {
       setUploads((prev) => ({
         ...prev,
@@ -285,7 +280,9 @@ const FileUpload = () => {
     } catch (error) {
       console.error('Pre-signed upload error:', error);
       const errorMessage =
-        error.response?.data?.message || error.message || 'Pre-signed upload failed. Please try again.';
+        error.response?.data?.message ||
+        error.message ||
+        'Pre-signed upload failed. Please try again.';
       setUploads((prev) => ({
         ...prev,
         [section]: {
@@ -300,6 +297,7 @@ const FileUpload = () => {
   /**
    * Render upload section component
    */
+  // eslint-disable-next-line no-unused-vars
   const UploadSection = ({
     title,
     section,
@@ -333,34 +331,24 @@ const FileUpload = () => {
             accept="image/jpeg,image/jpg,image/png,image/webp,application/pdf"
             multiple={multiple}
             onChange={(e) =>
-              multiple
-                ? handleMultipleFilesChange(section, e)
-                : handleSingleFileChange(section, e)
+              multiple ? handleMultipleFilesChange(section, e) : handleSingleFileChange(section, e)
             }
             disabled={uploadData.loading}
           />
-          
-          {uploadData.file && (
-            <p className="file-info">Selected: {uploadData.file.name}</p>
-          )}
-          
+
+          {uploadData.file && <p className="file-info">Selected: {uploadData.file.name}</p>}
+
           {uploadData.files && fileCount > 0 && (
             <p className="file-info">Selected: {fileCount} file(s)</p>
           )}
-          
-          <button
-            onClick={handleClick}
-            disabled={uploadData.loading}
-            className="upload-btn"
-          >
+
+          <button onClick={handleClick} disabled={uploadData.loading} className="upload-btn">
             {uploadData.loading ? 'Uploading...' : 'Upload'}
           </button>
-          
+
           {uploadData.message && (
             <p
-              className={`message ${
-                uploadData.message.includes('SUCCESS') ? 'success' : 'error'
-              }`}
+              className={`message ${uploadData.message.includes('SUCCESS') ? 'success' : 'error'}`}
             >
               {uploadData.message}
             </p>
@@ -382,7 +370,7 @@ const FileUpload = () => {
           multiple={false}
           presigned={false}
         />
-        
+
         <UploadSection
           title="S3 - Multiple Files (Normal)"
           section="s3Multiple"
@@ -401,7 +389,7 @@ const FileUpload = () => {
           multiple={false}
           presigned={true}
         />
-        
+
         <UploadSection
           title="S3 - Multiple Files (Pre-signed)"
           section="s3PresignedMultiple"
@@ -420,7 +408,7 @@ const FileUpload = () => {
           multiple={false}
           presigned={false}
         />
-        
+
         <UploadSection
           title="Cloudinary - Multiple Files"
           section="cloudinaryMultiple"
@@ -439,7 +427,7 @@ const FileUpload = () => {
           multiple={false}
           presigned={false}
         />
-        
+
         <UploadSection
           title="Local - Multiple Files"
           section="localMultiple"

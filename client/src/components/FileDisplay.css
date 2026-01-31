@@ -37,7 +37,8 @@
   box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
 }
 
-.loading, .error {
+.loading,
+.error {
   text-align: center;
   padding: 40px;
   font-size: 1.2rem;
@@ -126,25 +127,29 @@
   margin-bottom: 10px;
 }
 
-.pdf-link, .file-link {
+.pdf-link,
+.file-link {
   display: block;
   text-decoration: none;
   color: #374151;
   padding: 30px;
 }
 
-.pdf-icon, .file-icon {
+.pdf-icon,
+.file-icon {
   font-size: 4rem;
   margin-bottom: 10px;
 }
 
-.pdf-link p, .file-link p {
+.pdf-link p,
+.file-link p {
   margin: 0;
   font-weight: 500;
   color: #4b5563;
 }
 
-.file-date { font-size: 0.85rem;
+.file-date {
+  font-size: 0.85rem;
   color: #9ca3af;
   margin-top: 10px;
 }
@@ -187,7 +192,8 @@
   display: block;
 }
 
-.pdf-link-small, .file-link-small {
+.pdf-link-small,
+.file-link-small {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -196,7 +202,8 @@
   color: #374151;
 }
 
-.pdf-icon-small, .file-icon-small {
+.pdf-icon-small,
+.file-icon-small {
   font-size: 2.5rem;
 }
 

@@ -34,7 +34,7 @@ if (!fs.existsSync(uploadsDir)) {
 // Enable CORS for all origins (customize as needed)
 app.use(
   cors({
-    origin: [process.env.CLIENT_URL || 'http://localhost:3000', 'https://nmb7cxrf-3000.inc1.devtunnels.ms'],
+    origin: [process.env.CLIENT_URL],
     credentials: true,
   })
 );
@@ -70,9 +70,10 @@ app.use('/upload', uploadRoutes);
 // Error logging middleware
 app.use(errorLogger);
 
+// eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {
   console.error('Server Error:', err);
-  
+
   // Multer error handling
   if (err.code === 'LIMIT_FILE_SIZE') {
     return res.status(400).json({

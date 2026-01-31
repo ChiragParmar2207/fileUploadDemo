@@ -1,6 +1,4 @@
-import React, { useState } from 'react';
-import FileUpload from './components/FileUpload';
-import FileDisplay from './components/FileDisplay';
+import { useState } from 'react';
 import './App.css';
 
 function App() {
@@ -10,7 +8,9 @@ function App() {
     <div className="App">
       <div className="app-header">
         <h1>File Upload System</h1>
-        <p className="app-subtitle">Upload and manage files across AWS S3, Cloudinary, and Local Storage</p>
+        <p className="app-subtitle">
+          Upload and manage files across AWS S3, Cloudinary, and Local Storage
+        </p>
       </div>
 
       <div className="tab-navigation">
@@ -28,9 +28,7 @@ function App() {
         </button>
       </div>
 
-      <div className="tab-content">
-        {activeTab === 'upload' ? <FileUpload /> : <FileDisplay />}
-      </div>
+      <div className="tab-content">{activeTab === 'upload' ? <FileUpload /> : <FileDisplay />}</div>
     </div>
   );
 }

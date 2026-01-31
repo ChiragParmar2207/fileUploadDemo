@@ -116,7 +116,7 @@ export const generatePresignedUrlSingle = async (req, res) => {
     });
 
     // Generate pre-signed URL (valid for 5 minutes)
-    const presignedUrl = await getSignedUrl(s3, command, { 
+    const presignedUrl = await getSignedUrl(s3, command, {
       expiresIn: 300,
       // unhoistableHeaders: new Set(['x-amz-checksum-crc32']),
       // signableHeaders: new Set(["host", "content-type"])
@@ -160,6 +160,7 @@ export const generatePresignedUrlMultiple = async (req, res) => {
 
     // Generate pre-signed URLs for each file
     const presignedData = await Promise.all(
+      // eslint-disable-next-line no-unused-vars
       files.map(async ({ filename, filetype }) => {
         const timestamp = Date.now();
         const random = Math.floor(Math.random() * 1000);
@@ -170,11 +171,11 @@ export const generatePresignedUrlMultiple = async (req, res) => {
           Key: key,
         });
 
-        const presignedUrl = await getSignedUrl(s3, command, { 
+        const presignedUrl = await getSignedUrl(s3, command, {
           expiresIn: 300,
           // unhoistableHeaders: new Set(['x-amz-checksum-crc32']),
         });
-        
+
         const fileUrl = `https://${process.env.AWS_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${key}`;
 
         return {

@@ -52,18 +52,10 @@ router.post('/s3/presigned/multiple/confirm', confirmPresignedUploadMultiple);
  * Note: Uses local storage first, then uploads to Cloudinary
  */
 // POST /upload/cloudinary/single - Upload single file to Cloudinary
-router.post(
-  '/cloudinary/single',
-  uploadLocal.single('file'),
-  uploadSingleToCloudinary
-);
+router.post('/cloudinary/single', uploadLocal.single('file'), uploadSingleToCloudinary);
 
 // POST /upload/cloudinary/multiple - Upload multiple files to Cloudinary
-router.post(
-  '/cloudinary/multiple',
-  uploadLocal.array('files', 10),
-  uploadMultipleToCloudinary
-);
+router.post('/cloudinary/multiple', uploadLocal.array('files', 10), uploadMultipleToCloudinary);
 
 /**
  * Local Storage Upload Routes
@@ -72,11 +64,7 @@ router.post(
 router.post('/local/single', uploadLocal.single('file'), uploadSingleLocal);
 
 // POST /upload/local/multiple - Upload multiple files locally
-router.post(
-  '/local/multiple',
-  uploadLocal.array('files', 10),
-  uploadMultipleLocal
-);
+router.post('/local/multiple', uploadLocal.array('files', 10), uploadMultipleLocal);
 
 /**
  * GET Routes - Retrieve uploaded files
