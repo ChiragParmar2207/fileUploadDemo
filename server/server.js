@@ -6,6 +6,8 @@ import { fileURLToPath } from 'url';
 import fs from 'fs';
 import connectDB from './config/database.js';
 import uploadRoutes from './routes/uploadRoutes.js';
+import { requestLogger, errorLogger } from './middleware/logger.js';
+import logger from './config/logger.js';
 
 // Load environment variables
 dotenv.config();
@@ -23,7 +25,7 @@ const __dirname = path.dirname(__filename);
 const uploadsDir = path.join(__dirname, 'uploads');
 if (!fs.existsSync(uploadsDir)) {
   fs.mkdirSync(uploadsDir);
-  console.log('Created uploads directory');
+  logger.info('Created uploads directory');
 }
 
 /**
@@ -32,7 +34,7 @@ if (!fs.existsSync(uploadsDir)) {
 // Enable CORS for all origins (customize as needed)
 app.use(
   cors({
-    origin: process.env.CLIENT_URL || 'http://localhost:3000',
+    origin: [process.env.CLIENT_URL || 'http://localhost:3000', 'https://nmb7cxrf-3000.inc1.devtunnels.ms'],
     credentials: true,
   })
 );
@@ -40,6 +42,9 @@ app.use(
 // Body parser middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Request logging middleware
+app.use(requestLogger);
 
 // Serve static files from uploads directory
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
@@ -62,6 +67,9 @@ app.use('/upload', uploadRoutes);
 /**
  * Global Error Handler
  */
+// Error logging middleware
+app.use(errorLogger);
+
 app.use((err, req, res, next) => {
   console.error('Server Error:', err);
   
@@ -91,6 +99,8 @@ app.use((err, req, res, next) => {
 const PORT = process.env.PORT || 5050;
 
 app.listen(PORT, () => {
+  logger.info(`Server running on port ${PORT}`);
+  logger.info(`API endpoint: http://localhost:${PORT}`);
   console.log(`Server running on port ${PORT}`);
   console.log(`API endpoint: http://localhost:${PORT}`);
 });

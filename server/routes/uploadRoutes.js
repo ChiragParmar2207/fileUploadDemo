@@ -4,6 +4,10 @@ import { uploadLocal } from '../middleware/upload.js';
 import {
   uploadSingleToS3,
   uploadMultipleToS3,
+  generatePresignedUrlSingle,
+  generatePresignedUrlMultiple,
+  confirmPresignedUploadSingle,
+  confirmPresignedUploadMultiple,
   getAllS3Files,
 } from '../controllers/s3Controller.js';
 import {
@@ -20,13 +24,28 @@ import {
 const router = express.Router();
 
 /**
- * S3 Upload Routes
+ * S3 Upload Routes (Normal Method)
  */
 // POST /upload/s3/single - Upload single file to S3
 router.post('/s3/single', uploadS3.single('file'), uploadSingleToS3);
 
 // POST /upload/s3/multiple - Upload multiple files to S3
 router.post('/s3/multiple', uploadS3.array('files', 10), uploadMultipleToS3);
+
+/**
+ * S3 Pre-signed Upload Routes
+ */
+// POST /upload/s3/presigned/single - Generate pre-signed URL for single file
+router.post('/s3/presigned/single', generatePresignedUrlSingle);
+
+// POST /upload/s3/presigned/multiple - Generate pre-signed URLs for multiple files
+router.post('/s3/presigned/multiple', generatePresignedUrlMultiple);
+
+// POST /upload/s3/presigned/single/confirm - Confirm single file upload
+router.post('/s3/presigned/single/confirm', confirmPresignedUploadSingle);
+
+// POST /upload/s3/presigned/multiple/confirm - Confirm multiple files upload
+router.post('/s3/presigned/multiple/confirm', confirmPresignedUploadMultiple);
 
 /**
  * Cloudinary Upload Routes

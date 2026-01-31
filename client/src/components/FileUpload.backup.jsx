@@ -176,19 +176,12 @@ const FileUpload = () => {
 
       const { presignedUrl, fileUrl } = urlResponse.data.data;
 
-      // Step 2: Upload file directly to S3 using fetch WITHOUT Content-Type header
-      // Content-Type is not part of the signature
-      const uploadResponse = await fetch(presignedUrl, {
-        method: 'PUT',
-        body: uploadData.file,
-        // headers: {
-        //   'Content-Type': uploadData.file.type,
-        // },
+      // Step 2: Upload file directly to S3
+      await axios.put(presignedUrl, uploadData.file, {
+        headers: {
+          'Content-Type': uploadData.file.type,
+        },
       });
-
-      if (!uploadResponse.ok) {
-        throw new Error(`S3 upload failed: ${uploadResponse.statusText}`);
-      }
 
       // Step 3: Confirm upload with backend
       await axios.post(`${API_URL}/s3/presigned/single/confirm`, {
@@ -208,7 +201,7 @@ const FileUpload = () => {
     } catch (error) {
       console.error('Pre-signed upload error:', error);
       const errorMessage =
-        error.response?.data?.message || error.message || 'Pre-signed upload failed. Please try again.';
+        error.response?.data?.message || 'Pre-signed upload failed. Please try again.';
       setUploads((prev) => ({
         ...prev,
         [section]: {
@@ -252,16 +245,13 @@ const FileUpload = () => {
 
       const presignedData = urlResponse.data.data;
 
-      // Step 2: Upload all files directly to S3 using fetch WITHOUT Content-Type
+      // Step 2: Upload all files directly to S3
       await Promise.all(
         presignedData.map((data, index) =>
-          fetch(data.presignedUrl, {
-            method: 'PUT',
-            body: uploadData.files[index],
-          }).then((response) => {
-            if (!response.ok) {
-              throw new Error(`S3 upload failed for ${data.filename}: ${response.statusText}`);
-            }
+          axios.put(data.presignedUrl, uploadData.files[index], {
+            headers: {
+              'Content-Type': uploadData.files[index].type,
+            },
           })
         )
       );
@@ -285,7 +275,7 @@ const FileUpload = () => {
     } catch (error) {
       console.error('Pre-signed upload error:', error);
       const errorMessage =
-        error.response?.data?.message || error.message || 'Pre-signed upload failed. Please try again.';
+        error.response?.data?.message || 'Pre-signed upload failed. Please try again.';
       setUploads((prev) => ({
         ...prev,
         [section]: {

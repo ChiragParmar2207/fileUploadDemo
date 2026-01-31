@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './FileDisplay.css';
 
-const API_URL = 'http://localhost:5050/upload';
+const API_URL = 'https://nmb7cxrf-5050.inc1.devtunnels.ms/upload';
 
 /**
  * FileDisplay Component
@@ -75,7 +75,7 @@ const FileDisplay = () => {
   const getFileUrl = (filePath, isLocal = false) => {
     if (!filePath) return '';
     if (isLocal) {
-      return `http://localhost:5050${filePath}`;
+      return `https://nmb7cxrf-5050.inc1.devtunnels.ms${filePath}`;
     }
     return filePath;
   };

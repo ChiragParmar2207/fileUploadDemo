@@ -1,10 +1,5 @@
 import mongoose from 'mongoose';
 
-/**
- * S3 Bucket Files Schema
- * - file: String - stores single file URL
- * - files: [String] - stores multiple file URLs
- */
 const s3BucketFilesSchema = new mongoose.Schema(
   {
     file: {
@@ -14,6 +9,12 @@ const s3BucketFilesSchema = new mongoose.Schema(
     files: {
       type: [String],
       default: [],
+    },
+    type: {
+      type: String,
+      enum: ['normal', 'presigned'],
+      default: 'normal',
+      required: true,
     },
   },
   {
