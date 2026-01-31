@@ -132,7 +132,7 @@ const FileUpload = () => {
           file: null,
           files: null,
           loading: false,
-          message: `✅ ${response.data.message}`,
+          message: `SUCCESS: ${response.data.message}`,
         },
       }));
 
@@ -147,7 +147,7 @@ const FileUpload = () => {
         [section]: {
           ...prev[section],
           loading: false,
-          message: `❌ ${errorMessage}`,
+          message: `ERROR: ${errorMessage}`,
         },
       }));
     }
@@ -202,7 +202,7 @@ const FileUpload = () => {
           {uploadData.message && (
             <p
               className={`message ${
-                uploadData.message.includes('✅') ? 'success' : 'error'
+                uploadData.message.includes('SUCCESS') ? 'success' : 'error'
               }`}
             >
               {uploadData.message}
@@ -215,9 +215,6 @@ const FileUpload = () => {
 
   return (
     <div className="file-upload-container">
-      <h1>File Upload System</h1>
-      <p className="subtitle">Upload files to AWS S3, Cloudinary, or Local Storage</p>
-
       <div className="upload-grid">
         {/* S3 Uploads */}
         <UploadSection

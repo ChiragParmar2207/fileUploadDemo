@@ -1,8 +1,8 @@
 import mongoose from 'mongoose';
 
 /**
- * Connect to MongoDB database
- * Uses MONGODB_URI from environment variables
+ * MongoDB Database Connection
+ * Connects to MongoDB using Mongoose
  */
 const connectDB = async () => {
   try {

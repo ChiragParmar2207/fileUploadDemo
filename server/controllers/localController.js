@@ -81,3 +81,26 @@ export const uploadMultipleLocal = async (req, res) => {
     });
   }
 };
+
+/**
+ * Get all locally uploaded files
+ * Route: GET /upload/local/files
+ */
+export const getAllLocalFiles = async (req, res) => {
+  try {
+    const files = await LocalFiles.find().sort({ createdAt: -1 });
+
+    res.status(200).json({
+      success: true,
+      count: files.length,
+      data: files,
+    });
+  } catch (error) {
+    console.error('Error fetching local files:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error fetching local files',
+      error: error.message,
+    });
+  }
+};

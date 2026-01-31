@@ -4,14 +4,17 @@ import { uploadLocal } from '../middleware/upload.js';
 import {
   uploadSingleToS3,
   uploadMultipleToS3,
+  getAllS3Files,
 } from '../controllers/s3Controller.js';
 import {
   uploadSingleToCloudinary,
   uploadMultipleToCloudinary,
+  getAllCloudinaryFiles,
 } from '../controllers/cloudinaryController.js';
 import {
   uploadSingleLocal,
   uploadMultipleLocal,
+  getAllLocalFiles,
 } from '../controllers/localController.js';
 
 const router = express.Router();
@@ -55,5 +58,17 @@ router.post(
   uploadLocal.array('files', 10),
   uploadMultipleLocal
 );
+
+/**
+ * GET Routes - Retrieve uploaded files
+ */
+// GET /upload/s3/files - Get all S3 files
+router.get('/s3/files', getAllS3Files);
+
+// GET /upload/cloudinary/files - Get all Cloudinary files
+router.get('/cloudinary/files', getAllCloudinaryFiles);
+
+// GET /upload/local/files - Get all local files
+router.get('/local/files', getAllLocalFiles);
 
 export default router;

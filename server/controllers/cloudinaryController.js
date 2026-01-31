@@ -120,3 +120,26 @@ export const uploadMultipleToCloudinary = async (req, res) => {
     });
   }
 };
+
+/**
+ * Get all Cloudinary uploaded files
+ * Route: GET /upload/cloudinary/files
+ */
+export const getAllCloudinaryFiles = async (req, res) => {
+  try {
+    const files = await CloudinaryFiles.find().sort({ createdAt: -1 });
+
+    res.status(200).json({
+      success: true,
+      count: files.length,
+      data: files,
+    });
+  } catch (error) {
+    console.error('Error fetching Cloudinary files:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error fetching Cloudinary files',
+      error: error.message,
+    });
+  }
+};

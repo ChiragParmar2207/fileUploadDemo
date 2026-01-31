@@ -82,3 +82,26 @@ export const uploadMultipleToS3 = async (req, res) => {
     });
   }
 };
+
+/**
+ * Get all S3 uploaded files
+ * Route: GET /upload/s3/files
+ */
+export const getAllS3Files = async (req, res) => {
+  try {
+    const files = await S3BucketFiles.find().sort({ createdAt: -1 });
+
+    res.status(200).json({
+      success: true,
+      count: files.length,
+      data: files,
+    });
+  } catch (error) {
+    console.error('Error fetching S3 files:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error fetching S3 files',
+      error: error.message,
+    });
+  }
+};
