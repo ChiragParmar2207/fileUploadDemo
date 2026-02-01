@@ -1,4 +1,8 @@
 import { useState } from 'react';
+// eslint-disable-next-line no-unused-vars
+import FileUpload from './components/FileUpload';
+// eslint-disable-next-line no-unused-vars
+import FileDisplay from './components/FileDisplay';
 import './App.css';
 
 function App() {
